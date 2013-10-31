@@ -40,6 +40,7 @@
 			<catalog>
 				<rewrite>
 					<product_image>OnePica_ImageCdn_Model_Catalog_Product_Image</product_image>
+                    <product_attribute_backend_media>OnePica_ImageCdn_Model_Catalog_Product_Attribute_Backend_Media</product_attribute_backend_media>
 					<category>OnePica_ImageCdn_Model_Catalog_Category</category>
 				</rewrite>
 			</catalog>

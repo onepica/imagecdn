@@ -97,12 +97,14 @@ class OnePica_ImageCdn_Model_Adapter_Rackspace extends OnePica_ImageCdn_Model_Ad
 	 * @return bool
 	 */
     protected function _clearCache() { 
-    	$container = Mage::getStoreConfig('imagecdn/rackspace/container');
-    	$cont = $this->auth()->get_container($container);
-    	$files = $cont->get_objects();
-    	if(count($files)) {
-			foreach($files as $file) {
-				$cont->delete_object($file);
+      	$container = Mage::getStoreConfig('imagecdn/rackspace/container');
+      	$cont = $this->auth()->get_container($container);
+     	// it's changed to delete only cache files,
+     	// not full size images now (wojtek)
+     	$files = $cont->get_objects(0, null, 'catalog/product/cache');
+      	if(count($files)) {
+  			foreach($files as $file) {
+  				$cont->delete_object($file);
 			}
 		}
     }
@@ -110,14 +112,18 @@ class OnePica_ImageCdn_Model_Adapter_Rackspace extends OnePica_ImageCdn_Model_Ad
 	/**
 	 * Creates a full URL to the image on the remote server
 	 *
+	 * Added ability to use SSL for rackspace CDN as they started supporting
+	 * that feature. I've also removed useCdn() method from the end of this class. (wojtek) 
+	 *
 	 * @param string $relFilename	path (with filename) from the CDN root
 	 * @return string
 	 */
-    public function getUrl($filename) {
-    	$base_url = Mage::getStoreConfig('imagecdn/rackspace/base_url');
-	    $filename = $base_url . $this->getRelative($filename);
-	    return str_replace('\\', '/', $filename);
-    }
+	public function getUrl($filename) {
+		$type = Mage::app()->getStore()->isCurrentlySecure() ? 'secure_base_url' : 'base_url';
+		$base_url = Mage::getStoreConfig('imagecdn/rackspace/' . $type);
+		$filename = $base_url . $this->getRelative($filename);
+		return str_replace('\\', '/', $filename);
+	}
     
 	/**
 	 * Observer function to check log in credentials.
@@ -167,15 +173,36 @@ class OnePica_ImageCdn_Model_Adapter_Rackspace extends OnePica_ImageCdn_Model_Ad
 	}
 	
 	/**
-	 * If currently over HTTPS do not use the CDN to serve images since Rackspace doesn't support it
+	 * Download the image from the remote server.
 	 * 
+	 * @param string $filename	filename
 	 * @return bool
 	 */
-	public function useCdn() {
-    	if(Mage::app()->getStore()->isCurrentlySecure()) {
-    		return false;
-    	}
-		return parent::useCdn();
+	public function download($filename) {
+		$filename = $this->getRelative($filename);
+		try {
+			$result = $this->_download($filename);
+		} catch (Exception $e) {
+			$result = false;
+		}
+		return $result;
 	}
-    
+
+	/**
+	 * Download the image from the remote server.
+	 *
+	 * @param string $relFilename	path (with filename) from the CDN root
+	 * @return bool
+	 */
+	protected function _download($relFilename) {
+		$container = Mage::getStoreConfig('imagecdn/rackspace/container');
+		$cont = $this->auth()->get_container($container);
+		$file = $cont->get_object(substr($relFilename, 1));
+		$base = str_replace('\\', '/', Mage::getBaseDir('media'));
+		if (!file_exists(dirname($base . '/' . $file->name))) {
+			mkdir(dirname($base . '/' . $file->name), 0777, true);
+		}
+		$result = $file->save_to_filename($base . '/' . $file->name);
+		return $result ? true : false;
+	}
 }
