@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * OnePica_ImageCdn
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0), a
+ * copy of which is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   OnePica
+ * @package    OnePica_ImageCdn
+ * @author     OnePica Codemaster <codemaster@onepica.com>
+ * @copyright  Copyright (c) 2009 One Pica, Inc.
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config>
+    <modules>
+        <OnePica_ImageCdn>
+            <version>1.0.9</version>
+        </OnePica_ImageCdn>
+    </modules>
+    <global>
+        <models>
+            <imagecdn>
+                <class>OnePica_ImageCdn_Model</class>
+                <resourceModel>imagecdn_mysql4</resourceModel>
+            </imagecdn>
+            <imagecdn_mysql4>
+                <class>OnePica_ImageCdn_Model_Mysql4</class>
+                <entities>
+                    <cachedb>
+                        <table>op_imagecdn_cache</table>
+                    </cachedb>
+                </entities>
+            </imagecdn_mysql4>
+			<catalog>
+				<rewrite>
+					<product_image>OnePica_ImageCdn_Model_Catalog_Product_Image</product_image>
+					<category>OnePica_ImageCdn_Model_Catalog_Category</category>
+				</rewrite>
+			</catalog>
+        </models>
+        <resources>
+            <imagecdn_setup>
+                <setup>
+                    <module>OnePica_ImageCdn</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </imagecdn_setup>
+            <imagecdn_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </imagecdn_write>
+            <imagecdn_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </imagecdn_read>
+        </resources>
+        <helpers>
+            <imagecdn>
+            	<class>OnePica_ImageCdn_Helper</class>
+    		</imagecdn>
+			<catalog>
+				<rewrite>
+					<image>OnePica_ImageCdn_Helper_Image</image>
+				</rewrite>
+			</catalog>
+        </helpers>
+        <events>
+            <admin_system_config_changed_section_imagecdn>
+                <observers>
+                    <imagecdn>
+                        <type>singleton</type>
+                        <class>imagecdn/observer</class>
+                        <method>onConfigChange</method>
+                    </imagecdn>
+                </observers>
+            </admin_system_config_changed_section_imagecdn>
+    	</events>
+    </global>
+    <crontab>
+        <jobs>
+            <imagecdn>
+                <schedule><cron_expr>0 0 1 * *</cron_expr></schedule>
+                <run>
+                    <model>imagecdn/observer::cleanCache</model>
+                </run>
+            </imagecdn>
+        </jobs>
+    </crontab>
+	<!-- the adminhtml section is repeated in config.xml & adminhtml.xml for backwards compatibility -->
+	<!-- @see http://www.magentocommerce.com/bug-tracking/issue?issue=8496 -->
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<imagecdn translate="title">
+											<title>Image CDN</title>
+											<sort_order>100</sort_order>
+										</imagecdn>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+    <default>
+        <imagecdn>
+            <general>
+                <cache_check_size>1</cache_check_size>
+                <cache_ttl>1440</cache_ttl>
+            </general>
+            <ftp>
+                <url_is_direct>1</url_is_direct>
+            </ftp>
+        </imagecdn>
+    </default>
+</config>

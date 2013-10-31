@@ -1,0 +1,380 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * OnePica_ImageCdn
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0), a
+ * copy of which is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   OnePica
+ * @package    OnePica_ImageCdn
+ * @author     OnePica Codemaster <codemaster@onepica.com>
+ * @copyright  Copyright (c) 2009 One Pica, Inc.
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ */
+-->
+
+<config>
+    <sections>
+        <imagecdn translate="label" module="imagecdn">
+            <label>Image CDN</label>
+            <tab>catalog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>980</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General Settings</label>
+            		<comment><![CDATA[<style type="text/css"> .op-note { font-size:11px; font-weight:bold; } </style>]]></comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						 <status translate="label">
+                            <label>Current Adapter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>imagecdn/source_cdstypes</source_model>
+                            <sort_order>1</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </status>
+						<cache_method translate="label">
+                            <label>File Result Cache</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>imagecdn/source_cachemethods</source_model>
+                            <sort_order>2</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </cache_method>
+						<cache_ttl translate="label">
+                            <label>Cache Time-to-Live</label>
+                            <comment>in minutes</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </cache_ttl>
+						<cache_check_size translate="label">
+                            <label>Verify File Size</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+							<comment>Simply ensures file size is greater than zero. May not work in rare cases.</comment>
+                            <sort_order>4</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </cache_check_size>
+						<compression translate="label">
+                            <label>Image Compression</label>
+                            <comment><![CDATA[<p>1 is best quality/biggest file, 9 is worst quality/smaller</p><p>Compression is only available to jpeg and png formats. After changing this setting you may need to delete all of the previously created images on the remote server. This can easily be done by going to <code>System > Cache Management</code> and clicking on the <code>Clear</code> button next to <code>Image Cache</code>.</p>]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>imagecdn/source_compresion</source_model>
+                            <sort_order>5</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </compression>
+                    </fields>
+                </general>
+                <ftp translate="label">
+                    <label>FTP/FTPS/SFTP</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<host translate="label">
+                            <label>Host</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </host>
+						<port translate="label">
+                            <label>Port</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Optional. Leave blank to use defaults.</comment>
+                            <sort_order>30</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </port>
+						<user translate="label">
+                            <label>Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </user>
+						<pass translate="label">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>50</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </pass>
+						<passive translate="label">
+                            <label>FTP Passive Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+							<comment>In passive mode, data connections are initiated by this server, rather than by the CDN server. It may be needed if this server is behind a strict firewall.</comment>
+                            <sort_order>60</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </passive>
+						<base translate="label">
+                            <label>Base Directory</label>
+                            <comment>Optional. Path to use inside the root folder.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </base>
+						<url_base translate="label">
+                            <label>Base URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Example: http://www.yourdomain.com/images</comment>
+                            <sort_order>80</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base>
+						<url_base_secure translate="label">
+                            <label>Secure Base URL</label>
+                            <frontend_type>text</frontend_type>
+							<comment>Leave this blank to serve secure images locally.</comment>
+                            <sort_order>90</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base_secure>
+						<url_is_direct translate="label">
+                            <label>Direct URLs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+							<comment>Normally this is yes. Some systems may direct public URLs to a request-specific URL. In this case, you need to change this value to no.</comment>
+                            <sort_order>100</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_is_direct>
+                    </fields>
+                </ftp>
+                <amazons3 translate="label">
+                    <label>Amazon S3/CloudFront</label>
+                    <comment><![CDATA[<span class="op-note">To use CloudFront, simply enter your CloudFront domain in the base URL fields instead.</span>]]></comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<access_key_id translate="label">
+                            <label>Access Key ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </access_key_id>
+						<secret_access_key translate="label">
+                            <label>Secret Access Key</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>2</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </secret_access_key>
+						<bucket translate="label">
+                            <label>Bucket</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Must already be created and be dedicated for this Magento install only.</comment>
+                            <sort_order>3</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </bucket>
+						<url_base translate="label">
+                            <label>Base URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Example: http://[bucket].s3.amazonaws.com</comment>
+                            <sort_order>4</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base>
+						<url_base_secure translate="label">
+                            <label>Secure Base URL</label>
+                            <frontend_type>text</frontend_type>
+							<comment>Example: https://[bucket].s3.amazonaws.com</comment>
+                            <sort_order>5</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base_secure>
+                    </fields>
+                </amazons3>
+                <highwinds translate="label">
+                    <label>Highwinds</label>
+                    <comment><![CDATA[<span class="op-note">If you don't have access to Highwinds' API, you can also use the standard FTP adapter.</span>]]></comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<username translate="label">
+                            <label>Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </username>
+						<password translate="label">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>2</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </password>
+						<apikey translate="label">
+                            <label>API Key</label>
+                            <frontend_type>password</frontend_type>
+                            <comment>Must be requested from your Highwinds tech consultant</comment>
+                            <sort_order>3</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </apikey>
+						<base_dir translate="label">
+                            <label>Base Directory</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Optional. Path to use inside /cds folder.</comment>
+                            <sort_order>4</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </base_dir>
+						<base_url translate="label">
+                            <label>Base URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Example: http://api-server.hwcdn.net/[account_id]/cds/[base_dir]</comment>
+                            <sort_order>5</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </base_url>
+						<secure_base_url translate="label">
+                            <label>Secure Base URL</label>
+                            <frontend_type>label</frontend_type>
+                            <comment>Secure URLs are not supported by Highwinds at this time. All secure URLs will serve images locally.</comment>
+                            <sort_order>6</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </secure_base_url>
+                    </fields>
+                </highwinds>
+                <rackspace translate="label">
+                    <label>Rackspace Cloud Files</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<username translate="label">
+                            <label>Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </username>
+						<api_key translate="label">
+                            <label>API Key</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>2</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </api_key>
+						<container translate="label">
+                            <label>Container</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Must already be created and be dedicated for this Magento install only.</comment>
+                            <sort_order>3</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </container>
+						<base_url translate="label">
+                            <label>Base URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Example: http://[id].cdn.cloudfiles.rackspacecloud.com</comment>
+                            <sort_order>4</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </base_url>
+						<secure_base_url translate="label">
+                            <label>Secure Base URL</label>
+                            <frontend_type>label</frontend_type>
+                            <comment>Secure URLs are not supported by Rackspace Cloud Files at this time. All secure URLs will serve images locally.</comment>
+                            <sort_order>6</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </secure_base_url>
+                    </fields>
+                </rackspace>
+                <coralcdn translate="label">
+                    <label>DNS-based (like CoralCDN)</label>
+                    <frontend_type>text</frontend_type>
+                    <comment><![CDATA[<span class="op-note">Images will still be served to the CDN from your local server, but may be cached and distributed from the CDN servers (depending on your setup). To use CoralCDN simply append <code>.nyud.net</code> to the hostname of any URL. For more information, please visit <a href="http://www.coralcdn.org/" target="_blank">www.coralcdn.org</a>. Please note, it is <em>not recommended</em> to use Coral CDN in a production environment.  However, other DNS-base CDNs may be suitable.</span>]]></comment>
+                    <sort_order>99</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                	<fields>
+						<url_base translate="label">
+                            <label>Base URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base>
+						<url_base_secure translate="label">
+                            <label>Secure Base URL</label>
+                            <frontend_type>text</frontend_type>
+							<comment>Leave this blank to serve secure images locally.</comment>
+                            <sort_order>20</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+                        </url_base_secure>
+                	</fields>
+                </coralcdn>
+            </groups>
+        </imagecdn>
+    </sections>
+</config>
