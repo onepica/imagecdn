@@ -67,5 +67,3 @@ class Authentication extends PHPUnit_Framework_TestCase
             $this->assertNotNull($this->auth->cdnm_url);
     }
 }
-
-?>

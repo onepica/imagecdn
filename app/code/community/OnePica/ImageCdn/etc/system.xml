@@ -337,8 +337,8 @@
                         </base_url>
 						<secure_base_url translate="label">
                             <label>Secure Base URL</label>
-                            <frontend_type>label</frontend_type>
-                            <comment>Secure URLs are not supported by Rackspace Cloud Files at this time. All secure URLs will serve images locally.</comment>
+                            <frontend_type>text</frontend_type>
+                            <comment>Example: https://[id].ssl.cdn.cloudfiles.rackspacecloud.com</comment>
                             <sort_order>6</sort_order>
 		                    <show_in_default>1</show_in_default>
 		                    <show_in_website>1</show_in_website>

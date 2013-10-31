@@ -25,14 +25,19 @@ class OnePica_ImageCdn_Model_Mysql4_Cachedb_Collection extends Mage_Core_Model_M
 	/**
 	 * Custom method to truncate the cache table. Tests for recently created truncate method (added Magento 1.3.1)
 	 *
+	 * Changed way of getting db connection. It has been using $this->getConnection()
+	 * method, but that method of Collection class always returns read connection (wojtek)
+	 *
 	 * @return none
 	 */
 	public function truncate() {
-		if(method_exists($this->getConnection(), 'truncate')) {
-			$this->getConnection()->truncate($this->getTable('imagecdn/cachedb'));
+		$write = Mage::getSingleton('core/resource')->getConnection('imagecdn_write');
+
+		if(method_exists($write, 'truncate')) {
+			$write->truncate($this->getTable('imagecdn/cachedb'));
 		} else {
-			$sql = 'TRUNCATE ' . $this->getConnection()->quoteIdentifier($this->getTable('imagecdn/cachedb'));
-        	$this->getConnection()->raw_query($sql);
+			$sql = 'TRUNCATE ' . $write->quoteIdentifier($this->getTable('imagecdn/cachedb'));
+			$write->raw_query($sql);
 		}
 	}
 }

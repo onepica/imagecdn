@@ -82,4 +82,26 @@ class OnePica_ImageCdn_Model_Catalog_Product_Image extends Mage_Catalog_Model_Pr
     		$cds->clearCache();
     	}
     }
+
+    /**
+     * First check this file on FS
+     * If it doesn't exist - try to download it from CDN
+     *
+     * @param string $filename
+     * @return bool
+     * @author Wojciech Naruniec <wojtek@rocketweb.com>
+     */
+    protected function _fileExists($filename) {
+        if (file_exists($filename)) {
+            return true;
+        } else {
+            // try to get file from cdn (wojtek)
+            $cds = Mage::Helper('imagecdn')->factory();
+    	    if($cds->useCdn()) {
+	    	    return $cds->download($filename);
+    	    } else {
+                return Mage::helper('core/file_storage_database')->saveFileToFilesystem($filename);
+    	    }
+        }
+    }
 }
