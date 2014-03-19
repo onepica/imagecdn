@@ -1,0 +1,15 @@
+{
+    "name": "onepica/imagecdn",
+    "type": "magento-module",
+    "license":"OSL-3.0",
+    "description":"This extension enables you to host category and product images on a separate server with ease. This can improve page load time by offloading some of the stress from your web server and by allowing you to utilize a high performance content delivery network (CDN) or another remote host",
+    "authors":[
+        {
+            "name":"One Pica Codemaster",
+            "email":"codemaster@onepica.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
