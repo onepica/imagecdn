@@ -140,6 +140,7 @@ class OnePica_ImageCdn_Model_Adapter_AmazonS3_Wrapper
         if(!isset($headers['Content-Type']))
         {
             $ext = pathinfo($fs_path, PATHINFO_EXTENSION);
+            if (empty($ext)) $ext = pathinfo($s3_path, PATHINFO_EXTENSION);
             $headers['Content-Type'] = isset($this->mimeTypes[$ext]) ? $this->mimeTypes[$ext] : 'application/octet-stream';
         }
         $request['content-type'] = $headers['Content-Type'];
